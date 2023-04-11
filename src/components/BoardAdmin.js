@@ -11,13 +11,7 @@ const BoardUser = () => {
         setContent(response.data);
       },
       (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
+        const _content = error.toString();
         setContent(_content);
       }
     );
