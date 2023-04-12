@@ -3,21 +3,39 @@ import { useSearchParams } from "react-router-dom";
 import {Button, Form, Alert} from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 
+import ReviewService from '../../services/review.service';
+
+import { Navigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+
 const CreateReview = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
+  const [createdReviewSuccess, setCreatedReviewSuccess] = useState(false);
   const title = searchParams.get('title');
   const imdbID = searchParams.get('id');
 
+  const { user: currentUser } = useSelector((state) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
   const submitReview = () => {
     const review = {
+      userID: currentUser.id,
       title: reviewTitle,
       imdbID: imdbID,
       reviewText: reviewText,
       rating: rating
     }
+    ReviewService.createReview(review).then((res) => {
+      setCreatedReviewSuccess(true);
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 
   return (
@@ -26,13 +44,13 @@ const CreateReview = () => {
         <div className="col-2"></div>
         <div className="col-8">
         {
-          (!title|| !imdbID) && 
+          (!title || !imdbID) && 
           <Alert key={'danger'} variant={'danger'}>
             Missing title or id for review, try searching for a movie then clicking the Create Review button.
           </Alert>
         }
         {
-          (title && imdbID) &&
+          (title && imdbID && !createdReviewSuccess) &&
           <Form>
             <h3>Creating Review for: {searchParams.get('title')}</h3>
             <Form.Group className="mb-3" controlId="reviewTitle">
@@ -70,6 +88,12 @@ const CreateReview = () => {
               Submit
             </Button>
           </Form>
+        }
+        {
+          createdReviewSuccess &&
+          <Alert key={'success'} variant={'success'}>
+            Successfully created review
+          </Alert>
         }
         </div>
         <div className="col-2"></div>
