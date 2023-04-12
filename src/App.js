@@ -14,8 +14,9 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
-import Search from "./components/Search"
+import Search from "./components/Search/Search"
 import { clearMessage } from "./actions/message";
+import Movie from "./components/Movie/Movie";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/mod" element={<BoardModerator />} />
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/movie/:id" element={<Movie />} />
         </Routes>
       </div>
 
