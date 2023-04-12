@@ -17,12 +17,15 @@ const SearchResult = ({searchResult}) => {
         <Card.Title>{searchResult.Title}</Card.Title>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>Type: {searchResult.Type}</ListGroup.Item>
-        <ListGroup.Item>Year: {searchResult.Year}</ListGroup.Item>
+        {searchResult.Type && <ListGroup.Item>Type: {searchResult.Type}</ListGroup.Item>}
+        {searchResult.Year && <ListGroup.Item>Year: {searchResult.Year}</ListGroup.Item>}
       </ListGroup>
       <Card.Body>
-        <Card.Link href="#">See More</Card.Link>
-      </Card.Body>
+        {
+          searchResult.imdbID &&
+          <Card.Link href={`/movie/${searchResult.imdbID}`}>See More</Card.Link>
+        }
+        </Card.Body>
     </Card>
   );
 };
