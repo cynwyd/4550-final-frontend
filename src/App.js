@@ -18,6 +18,7 @@ import Search from "./components/Search/Search"
 import { clearMessage } from "./actions/message";
 import Movie from "./components/Movie/Movie";
 import CreateReview from "./components/Review/CreateReview";
+import Review from "./components/Review/Review";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/review/create" element={<CreateReview />} />
+          <Route path="/review/:id" element={<Review />} />
         </Routes>
       </div>
 

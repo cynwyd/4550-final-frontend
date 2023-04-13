@@ -6,6 +6,16 @@ const createReview = (review) => {
   return axios.post(API_URL + "review/new", review);
 };
 
+const getReview = (reviewID) => {
+  return axios.get(API_URL + "review/" + reviewID);
+};
+
+const getReviewsByMovieID = (imdbID) => {
+  return axios.get(API_URL + "review/movie/" + imdbID);
+};
+
 export default {
-  createReview
+  createReview,
+  getReview,
+  getReviewsByMovieID
 };

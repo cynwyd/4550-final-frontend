@@ -12,7 +12,7 @@ const Search = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   
-  const [searchTitle, setSearchTitle] = useState(searchParams.get('title'));
+  const [searchTitle, setSearchTitle] = useState((searchParams.get('title') != null ? searchParams.get('title') : ""));
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {

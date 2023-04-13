@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {Button, Card, Container, Row, Col, ListGroup} from 'react-bootstrap';
 
 import MovieService from "../../services/movie.service";
+import ReviewService from "../../services/review.service";
+
 
 const Movie = () => {
+  const navigate = useNavigate();
   const params = useParams();
 
   const [movieInfo, setMovieInfo] = useState({});
+  const [reviews, setReviews] = useState({});
 
   useEffect(() => {
     MovieService.getMovieByID(params.id).then((result) => {
@@ -19,6 +23,20 @@ const Movie = () => {
     });
   }, [params])
 
+  useEffect(() => {
+    if(movieInfo.imdbID) {
+      ReviewService.getReviewsByMovieID(movieInfo.imdbID).then((result) => {
+        console.log(result.data.reviews);
+        setReviews(result.data.reviews);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [movieInfo])
+
+  const createReview = () => {
+    navigate(`/review/create?title=${movieInfo.Title}&id=${movieInfo.imdbID}`);
+  }
 
   return (
     <div className="container">
@@ -61,7 +79,26 @@ const Movie = () => {
             <Card.Text>
               {movieInfo.Plot && movieInfo.Plot}
             </Card.Text>
-            <Button variant="primary">Write a Review</Button>
+            <Button variant="primary" onClick = {createReview}>Write a Review</Button>
+          </Card.Body>
+          <Card.Body>
+            <Card.Title>
+              Reviews for {movieInfo.Title}:
+            </Card.Title>
+            {
+              reviews.length > 0 &&
+              reviews.map((review) => {
+                return(
+                  <Card>
+                    <Card.Header as="h2">{review.title}</Card.Header>
+                    <Card.Body>
+                      <Card.Text>Rating: {review.rating}/5</Card.Text>
+                      <Card.Link href={`/review/${review._id}`}>See Full Review</Card.Link>
+                    </Card.Body>
+                  </Card>
+                );
+              })
+            }
           </Card.Body>
         </Card>
         </div>
