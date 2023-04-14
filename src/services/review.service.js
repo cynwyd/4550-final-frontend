@@ -14,8 +14,13 @@ const getReviewsByMovieID = (imdbID) => {
   return axios.get(API_URL + "review/movie/" + imdbID);
 };
 
+const likeReview = (reviewID, userID) => {
+  return axios.put(API_URL + "review/" + reviewID + "/like", {userID: userID});
+};
+
 export default {
   createReview,
   getReview,
-  getReviewsByMovieID
+  getReviewsByMovieID,
+  likeReview
 };
