@@ -19,9 +19,24 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
+const updateUserInfo = (updatedInfo, userID) => {
+  return axios.put(API_URL + "user/" + userID + "/update", updatedInfo, { headers: authHeader() });
+}
+
+const getUserInfo = (userID) => {
+  return axios.get(API_URL + "user/" + userID);
+}
+
+const followUser = (userID) => {
+  return axios.post(API_URL + "user/" + userID + "/follow", {}, { headers: authHeader() });
+}
+
 export default {
   getPublicContent,
   getUserBoard,
   getModeratorBoard,
   getAdminBoard,
+  updateUserInfo,
+  getUserInfo,
+  followUser
 };

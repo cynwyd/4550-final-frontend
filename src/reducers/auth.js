@@ -4,6 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  PROFILE_UPDATE,
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -31,6 +32,14 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: true,
         user: payload.user,
+      };
+    case PROFILE_UPDATE:
+      user.email = payload.email;
+      user.phone = payload.phone;
+      localStorage.setItem('user', JSON.stringify(user));
+      return {
+        ...state,
+        user: user,
       };
     case LOGIN_FAIL:
       return {

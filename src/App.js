@@ -19,6 +19,7 @@ import { clearMessage } from "./actions/message";
 import Movie from "./components/Movie/Movie";
 import CreateReview from "./components/Review/CreateReview";
 import Review from "./components/Review/Review";
+import PublicProfile from "./components/PublicProfile";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<PublicProfile />} />
           <Route path="/user" element={<BoardUser />} />
           <Route path="/mod" element={<BoardModerator />} />
           <Route path="/admin" element={<BoardAdmin />} />
