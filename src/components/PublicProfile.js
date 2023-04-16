@@ -5,16 +5,22 @@ import { useSelector } from "react-redux";
 import { Card, Container, ListGroup, Row, Col, Button } from "react-bootstrap";
 
 import UserService from "../services/user.service";
+import reviewService from "../services/review.service";
 
 const PublicProfile = () => {
   let { user: currentUser } = useSelector((state) => state.auth);
   const [userInfo, setUserInfo] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const params = useParams();
 
   useEffect(() => {
     UserService.getUserInfo(params.id).then((response) => {
       console.log(response.data.userInfo);
       setUserInfo(response.data.userInfo);
+      reviewService.getReviewsByUserID(response.data.userInfo.id).then((response) => {
+        console.log(response.data.reviews);
+        setReviews(response.data.reviews);
+      });
     });
   }, []);
 
@@ -23,7 +29,7 @@ const PublicProfile = () => {
       console.log(response.data);
       setUserInfo(response.data.userInfo);
     });
-  }
+  };
 
   return (
     <div className="container">
@@ -72,18 +78,42 @@ const PublicProfile = () => {
               <Card.Body>
                 <div className="d-grid gap-2">
                   {currentUser.id !== userInfo.id &&
-                  (
-                    userInfo.followers.filter(e => e._id === currentUser.id).length > 0 ? (
-                    <Button variant="secondary" width="100%" onClick={followUser}>
-                      Unfollow
-                    </Button>
-                  ) : (
-                    <Button variant="primary" width="100%" onClick={followUser}>
-                      Follow
-                    </Button>
-                  )
-                )}
+                    (userInfo.followers.filter((e) => e._id === currentUser.id)
+                      .length > 0 ? (
+                      <Button
+                        variant="secondary"
+                        width="100%"
+                        onClick={followUser}
+                      >
+                        Unfollow
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        width="100%"
+                        onClick={followUser}
+                      >
+                        Follow
+                      </Button>
+                    ))}
                 </div>
+              </Card.Body>
+              <Card.Body>
+                <Card.Title>Reviews by {currentUser.username}:</Card.Title>
+                {reviews.length > 0 &&
+                  reviews.map((review) => {
+                    return (
+                      <Card key = {review._id}>
+                        <Card.Header as="h2">{review.title}</Card.Header>
+                        <Card.Body>
+                          <Card.Text>Rating: {review.rating}/5</Card.Text>
+                          <Card.Link href={`/review/${review._id}`}>
+                            See Full Review
+                          </Card.Link>
+                        </Card.Body>
+                      </Card>
+                    );
+                  })}
               </Card.Body>
             </Card>
           )}

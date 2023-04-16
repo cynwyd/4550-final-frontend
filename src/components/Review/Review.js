@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Alert, Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
@@ -9,7 +9,7 @@ import reviewService from "../../services/review.service";
 const Review = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [reviewInfo, setReviewInfo] = useState({});
+  const [reviewInfo, setReviewInfo] = useState(null);
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -47,10 +47,13 @@ const Review = () => {
       <div className="row">
         <div className="col-2"></div>
         <div className="col-8">
-          {reviewInfo != {} && (
+          {reviewInfo && (
             <Card>
               <Card.Header as="h2">{reviewInfo.title}</Card.Header>
               <Card.Body>
+                <Card.Text>
+                  By: <Link to={`/profile/${reviewInfo.owner._id}`}>{reviewInfo.owner.username}</Link>
+                </Card.Text>
                 <Card.Text>{reviewInfo.reviewText}</Card.Text>
                 {reviewInfo.likes && (
                   <>

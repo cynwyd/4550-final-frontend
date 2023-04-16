@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 
@@ -23,9 +24,13 @@ const Home = () => {
         <div className="col-8">
         {
           reviews.map((review) => {
-            return (<Card>
+            return (
+            <Card key = {review._id}>
               <Card.Header as="h2">{review.title}</Card.Header>
               <Card.Body>
+                <Card.Text>
+                  By: <Link to={`/profile/${review.owner._id}`}>{review.owner.username}</Link>
+                </Card.Text>
                 <Card.Text>
                   {review.reviewText.substring(0, 40)}...
                 </Card.Text>

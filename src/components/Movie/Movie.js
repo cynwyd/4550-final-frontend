@@ -89,7 +89,7 @@ const Movie = () => {
               reviews.length > 0 &&
               reviews.map((review) => {
                 return(
-                  <Card>
+                  <Card key = {review._id}>
                     <Card.Header as="h2">{review.title}</Card.Header>
                     <Card.Body>
                       <Card.Text>Rating: {review.rating}/5</Card.Text>

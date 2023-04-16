@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -7,15 +7,23 @@ import { PROFILE_UPDATE } from "../actions/types";
 import { Card, ListGroup, Button, Form } from "react-bootstrap";
 
 import UserService from "../services/user.service";
+import reviewService from "../services/review.service";
 
 const Profile = () => {
   let { user: currentUser } = useSelector((state) => state.auth);
-  console.log(currentUser);
+  const [reviews, setReviews] = useState([]);
   const [editing, setEditing] = useState(false);
   const [newEmail, setNewEmail] = useState(currentUser.email);
   const [newPhone, setNewPhone] = useState(
     currentUser.phone ? currentUser.phone : ""
   );
+
+  useEffect(() => {
+    reviewService.getReviewsByUserID(currentUser.id).then((response) => {
+      console.log(response.data.reviews);
+      setReviews(response.data.reviews);
+    });
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -26,17 +34,19 @@ const Profile = () => {
   const submitProfileChanges = () => {
     const body = {
       email: newEmail,
-      phone: newPhone
-    }
-    UserService.updateUserInfo(body, currentUser.id).then((response) => {
-      dispatch({
-        type: PROFILE_UPDATE,
-        payload: response.data.newUserInfo,
+      phone: newPhone,
+    };
+    UserService.updateUserInfo(body, currentUser.id)
+      .then((response) => {
+        dispatch({
+          type: PROFILE_UPDATE,
+          payload: response.data.newUserInfo,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+  };
 
   return (
     <div className="container">
@@ -98,6 +108,23 @@ const Profile = () => {
                   </Button>
                 </>
               )}{" "}
+            </Card.Body>
+            <Card.Body>
+              <Card.Title>Reviews by {currentUser.username}:</Card.Title>
+              {reviews.length > 0 &&
+                reviews.map((review) => {
+                  return (
+                    <Card key={review._id}>
+                      <Card.Header as="h2">{review.title}</Card.Header>
+                      <Card.Body>
+                        <Card.Text>Rating: {review.rating}/5</Card.Text>
+                        <Card.Link href={`/review/${review._id}`}>
+                          See Full Review
+                        </Card.Link>
+                      </Card.Body>
+                    </Card>
+                  );
+                })}
             </Card.Body>
           </Card>
         </div>
