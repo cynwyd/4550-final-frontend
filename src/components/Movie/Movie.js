@@ -4,11 +4,14 @@ import {Button, Card, Container, Row, Col, ListGroup} from 'react-bootstrap';
 
 import MovieService from "../../services/movie.service";
 import ReviewService from "../../services/review.service";
+import { useSelector } from "react-redux";
 
 
 const Movie = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const { user: currentUser } = useSelector((state) => state.auth);
+  console.log(currentUser);
 
   const [movieInfo, setMovieInfo] = useState({});
   const [reviews, setReviews] = useState({});
@@ -79,7 +82,7 @@ const Movie = () => {
             <Card.Text>
               {movieInfo.Plot && movieInfo.Plot}
             </Card.Text>
-            <Button variant="primary" onClick = {createReview}>Write a Review</Button>
+            {(currentUser && currentUser.reviewer) && <Button variant="primary" onClick = {createReview}>Write a Review</Button>}
           </Card.Body>
           <Card.Body>
             <Card.Title>
@@ -93,7 +96,7 @@ const Movie = () => {
                     <Card.Header as="h2">{review.title}</Card.Header>
                     <Card.Body>
                       <Card.Text>Rating: {review.rating}/5</Card.Text>
-                      <Card.Link href={`/review/${review._id}`}>See Full Review</Card.Link>
+                      <Card.Link href={`/review/details/${review._id}`}>See Full Review</Card.Link>
                     </Card.Body>
                   </Card>
                 );

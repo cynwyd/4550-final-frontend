@@ -23,7 +23,7 @@ const SearchResult = ({searchResult}) => {
       <Card.Body>
         {
           searchResult.imdbID &&
-          <Card.Link href={`/movie/${searchResult.imdbID}`}>See More</Card.Link>
+          <Card.Link href={`/details/${searchResult.imdbID}`}>See More</Card.Link>
         }
         </Card.Body>
     </Card>

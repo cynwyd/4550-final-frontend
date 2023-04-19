@@ -56,6 +56,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
+  const [reviewer, setReviewer] = useState(false);
 
   const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const Register = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(register(username, email, password))
+      dispatch(register(username, email, password, reviewer))
         .then(() => {
           setSuccessful(true);
         })
@@ -138,6 +139,15 @@ const Register = () => {
                   value={password}
                   onChange={onChangePassword}
                   validations={[required, vpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="role">Reviewer?</label>
+                <input
+                  type="checkbox"
+                  name="role"
+                  onChange = {(e) => {setReviewer(!reviewer)}}
                 />
               </div>
 

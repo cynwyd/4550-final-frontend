@@ -13,22 +13,24 @@ const Profile = () => {
   let { user: currentUser } = useSelector((state) => state.auth);
   const [reviews, setReviews] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [newEmail, setNewEmail] = useState(currentUser.email);
-  const [newPhone, setNewPhone] = useState(
-    currentUser.phone ? currentUser.phone : ""
-  );
+  const [newEmail, setNewEmail] = useState("");
+  const [newPhone, setNewPhone] = useState("");
 
   useEffect(() => {
-    reviewService.getReviewsByUserID(currentUser.id).then((response) => {
-      console.log(response.data.reviews);
-      setReviews(response.data.reviews);
-    });
+    if (currentUser) {
+      setNewEmail(currentUser.email);
+      setNewPhone(currentUser.phone ? currentUser.phone : "");
+      reviewService.getReviewsByUserID(currentUser.id).then((response) => {
+        console.log(response.data.reviews);
+        setReviews(response.data.reviews);
+      });
+    }
   }, []);
 
   const dispatch = useDispatch();
 
-  if (!currentUser) {
-    return <Navigate to="/login" />;
+  if(!currentUser) {
+    return <Navigate to="/login"></Navigate>
   }
 
   const submitProfileChanges = () => {
@@ -42,6 +44,7 @@ const Profile = () => {
           type: PROFILE_UPDATE,
           payload: response.data.newUserInfo,
         });
+        setEditing(false);
       })
       .catch((err) => {
         console.log(err);
@@ -118,7 +121,7 @@ const Profile = () => {
                       <Card.Header as="h2">{review.title}</Card.Header>
                       <Card.Body>
                         <Card.Text>Rating: {review.rating}/5</Card.Text>
-                        <Card.Link href={`/review/${review._id}`}>
+                        <Card.Link href={`/review/details/${review._id}`}>
                           See Full Review
                         </Card.Link>
                       </Card.Body>

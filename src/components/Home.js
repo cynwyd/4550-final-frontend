@@ -37,7 +37,7 @@ const Home = () => {
                 <Card.Text>
                   Rating: {review.rating}/5
                 </Card.Text>
-                <Card.Link href={`/review/${review._id}`}>See Full Review</Card.Link>
+                <Card.Link href={`/review/details/${review._id}`}>See Full Review</Card.Link>
               </Card.Body>
             </Card>);
           })

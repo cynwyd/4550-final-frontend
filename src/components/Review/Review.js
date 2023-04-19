@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { Alert, Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
@@ -14,7 +14,7 @@ const Review = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
 
   const navigateToMovie = () => {
-    navigate("/movie/" + reviewInfo.imdbID);
+    navigate("/details/" + reviewInfo.imdbID);
   };
 
   useEffect(() => {
@@ -36,10 +36,14 @@ const Review = () => {
   }, []);
 
   const clickLike = () => {
-    reviewService.likeReview(params.id, currentUser.id).then((response) => {
-      console.log(response.data.review);
-      setReviewInfo(response.data.review);
-    });
+    if(!currentUser) {
+      navigate("/login");
+    } else {
+      reviewService.likeReview(params.id, currentUser.id).then((response) => {
+        console.log(response.data.review);
+        setReviewInfo(response.data.review);
+      });
+    }
   };
 
   return (
@@ -55,7 +59,22 @@ const Review = () => {
                   By: <Link to={`/profile/${reviewInfo.owner._id}`}>{reviewInfo.owner.username}</Link>
                 </Card.Text>
                 <Card.Text>{reviewInfo.reviewText}</Card.Text>
-                {reviewInfo.likes && (
+                {
+                  !currentUser && (
+                    <>
+                    <span>{reviewInfo.likes.length}</span>
+                    <AiOutlineLike
+                        onClick={clickLike}
+                        style={{
+                          fontSize: "22px",
+                          paddingBottom: "3px",
+                          cursor: "pointer",
+                        }}
+                      ></AiOutlineLike>
+                    </>
+                  )
+                }
+                {(reviewInfo.likes && currentUser) && (
                   <>
                     <span>{reviewInfo.likes.length}</span>
                     {reviewInfo.likes.includes(currentUser.id) ? (
@@ -78,9 +97,9 @@ const Review = () => {
                         }}
                       ></AiOutlineLike>
                     )}
-                    <br />
                   </>
                 )}
+                <br />
                 <Button
                   className="mt-2"
                   variant="primary"

@@ -48,9 +48,9 @@ const App = () => {
           <Route path="/mod" element={<BoardModerator />} />
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/movie/:id" element={<Movie />} />
+          <Route path="/details/:id" element={<Movie />} />
           <Route path="/review/create" element={<CreateReview />} />
-          <Route path="/review/:id" element={<Review />} />
+          <Route path="/review/details/:id" element={<Review />} />
         </Routes>
       </div>
 

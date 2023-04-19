@@ -23,6 +23,10 @@ const CreateReview = () => {
     return <Navigate to="/login" />;
   }
 
+  if (!currentUser.reviewer) {
+    return <Navigate to="/home" />;
+  }
+
   const submitReview = () => {
     const review = {
       userID: currentUser.id,
