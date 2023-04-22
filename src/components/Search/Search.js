@@ -40,8 +40,8 @@ const Search = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
           <header className="jumbotron">
             <h3>Search Movies</h3>
           </header>
@@ -56,11 +56,11 @@ const Search = () => {
             />
           </InputGroup>
         </div>
-        <div className="col-2"></div>
+        <div className="col-lg-2"></div>
       </div>
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
           <div className="row">
             {
               (searchResults === undefined) &&
@@ -76,7 +76,7 @@ const Search = () => {
             }
           </div>
         </div>
-        <div className="col-2"></div>
+        <div className="col-lg-2"></div>
       </div>
     </div>
   );

@@ -58,25 +58,9 @@ const Nav = () => {
 
           <li className="nav-item">
             <Link to={"/search"} className="nav-link">
-              Search Movies
+              Search
             </Link>
           </li>
-
-          {showAdminBoard && (
-            <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
-              </Link>
-            </li>
-          )}
-
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
-            </li>
-          )}
         </div>
 
         {currentUser ? (

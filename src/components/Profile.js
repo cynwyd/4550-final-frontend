@@ -54,8 +54,8 @@ const Profile = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
           <Card>
             <Card.Header as="h2">
               Profile Page for: {currentUser.username}
@@ -131,7 +131,7 @@ const Profile = () => {
             </Card.Body>
           </Card>
         </div>
-        <div className="col-2"></div>
+        <div className="col-lg-2"></div>
       </div>
     </div>
   );

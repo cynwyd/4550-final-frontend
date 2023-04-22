@@ -36,8 +36,8 @@ const PublicProfile = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
           {userInfo && (
             <Card>
               <Card.Header as="h2">
@@ -123,7 +123,7 @@ const PublicProfile = () => {
             </Card>
           )}
         </div>
-        <div className="col-2"></div>
+        <div className="col-lg-2"></div>
       </div>
     </div>
   );

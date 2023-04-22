@@ -44,14 +44,14 @@ const Movie = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
         <Card>
           <Card.Header as="h2">{movieInfo.Title}</Card.Header>
           <Card.Body>
             <Container>
               <Row>
-                <Col>
+                <Col sm={12} md={6} className = "mt-2">
                   {
                     movieInfo.Poster ? 
                     <Card.Img variant="top" src={movieInfo.Poster} /> :
@@ -60,7 +60,7 @@ const Movie = () => {
                     </Card.Text>
                   }
                 </Col>
-                <Col>
+                <Col sm={12}  md={6} className = "mt-2">
                 <ListGroup className="list-group-flush">
                   {movieInfo.Released && <ListGroup.Item>Release Date: {movieInfo.Released}</ListGroup.Item>}
                   {movieInfo.Rated && <ListGroup.Item>Rating: {movieInfo.Rated}</ListGroup.Item>}
@@ -105,7 +105,7 @@ const Movie = () => {
           </Card.Body>
         </Card>
         </div>
-        <div className="col-2"></div>
+        <div className="col-lg-2"></div>
       </div>
     </div>
   );

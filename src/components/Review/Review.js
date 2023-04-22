@@ -49,8 +49,8 @@ const Review = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
           {reviewInfo && (
             <Card>
               <Card.Header as="h2">{reviewInfo.title}</Card.Header>
@@ -111,7 +111,7 @@ const Review = () => {
             </Card>
           )}
         </div>
-        <div className="col-2"></div>
+        <div className="col-lg-2"></div>
       </div>
     </div>
   );
