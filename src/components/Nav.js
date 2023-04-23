@@ -47,7 +47,7 @@ const Nav = () => {
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link" style={{color: "white"}}>
-              SoundScout
+              FilmScout
             </Link>
           </li>
           <li className="nav-item">

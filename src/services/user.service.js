@@ -7,6 +7,10 @@ const getPublicContent = () => {
   return axios.get(API_URL + "review/recent");
 };
 
+const getUserContent = (id) => {
+  return axios.get(API_URL + "review/recent/" + id);
+};
+
 const getUserBoard = () => {
   return axios.get(API_URL + "user", { headers: authHeader() });
 };
@@ -33,6 +37,7 @@ const followUser = (userID) => {
 
 export default {
   getPublicContent,
+  getUserContent,
   getUserBoard,
   getModeratorBoard,
   getAdminBoard,

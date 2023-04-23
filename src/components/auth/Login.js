@@ -71,7 +71,7 @@ const Login = (props) => {
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <h1>Sound Scout</h1>
+        <h1>Film Scout</h1>
 
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">

@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 
 const Home = () => {
   const [reviews, setReviews] = useState([]);
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    UserService.getPublicContent().then((response) => {
-      console.log(response.data.reviews);
-      const reviews = [...response.data.reviews];
-      setReviews(reviews);
-    }).catch((err) => {
-      console.log(err);
-    });
+    if(currentUser) {
+      UserService.getUserContent(currentUser.id).then((response) => {
+        const reviews = [...response.data.reviews];
+        setReviews(reviews);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }else {
+      UserService.getPublicContent().then((response) => {
+        const reviews = [...response.data.reviews];
+        setReviews(reviews);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
   }, []);
 
   return (
