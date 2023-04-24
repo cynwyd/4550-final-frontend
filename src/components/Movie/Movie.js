@@ -82,7 +82,7 @@ const Movie = () => {
             <Card.Text>
               {movieInfo.Plot && movieInfo.Plot}
             </Card.Text>
-            {(currentUser && currentUser.reviewer) && <Button variant="primary" onClick = {createReview}>Write a Review</Button>}
+            <Button variant="primary" onClick = {createReview}>Write a Review</Button>
           </Card.Body>
           <Card.Body>
             <Card.Title>

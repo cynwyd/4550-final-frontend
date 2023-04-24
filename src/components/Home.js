@@ -32,6 +32,7 @@ const Home = () => {
       <div className="row">
         <div className="col-lg-2"></div>
         <div className="col-lg-8">
+          <h2>Welcome to Film Scout! Here are {currentUser ? "the most recent movie reviews for you" : "the most recent movie reviews"}</h2>
         {
           reviews.map((review) => {
             return (

@@ -25,7 +25,7 @@ const Search = () => {
           setSearchResults(newResults);
         });
       }
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchTitle]);
